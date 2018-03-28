@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+
+  <script>
+    var ch_1 = ["09:12:23", "11:14:35"];
+    var ch_2 = ["10:34:01", "13:23:40"];
+    var ch_3 = ["10:34:31", "11:20:10"];
+    var ch_list = [ch_1, ch_2, ch_3];
+
+    function time_cal (t) {
+    return ( (Number(t[0]) * 10 + Number(t[1]) ) * 60 + Number(t[3]) * 10 +Number(t[4]) ) * 60 + Number(t[6]) * 10 + Number(t[7])
+    };
+
+
+    function check (t) {
+      var count = 0;
+      for (var i = 0; i < ch_list.length; i++) {
+        if( time_cal(ch_list[i][0]) <= time_cal(t) && time_cal(t) <= time_cal(ch_list[i][1])) {
+          count += 1; }        
+        };
+        return  count;
+      }
+    
+
+
+
+
+
+  </script>
+</body>
+</html>
