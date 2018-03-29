@@ -10,22 +10,61 @@
 
   <script>
 
-    function gen (a, b) {
-      var list_ = [];
-      for (var i = 0; i < a; i++){
-        for (var j = 0; i < b; i++){
-          if(Math.round(Math.random() == 1)) {
-            list_[i][j] = "*";
-          } else {
-            list_[i][j] = string(.);
-          }
-        }
-      }
+var ex = [[".", "*", "*"],["*", ".", "*"]]
 
-      return list_
+    function gen (a, b) {
+      var list_1 = [];
+      for (var i = 0; i < a; i++){
+        var list_2 = []
+        for (var j = 0; j < b; j++){
+                    if(Math.round(Math.random()) == 1) {
+            list_2[j] = "*";
+          } else {
+            list_2[j] = ".";
+          }
+                  };
+        list_1[i] = list_2;
+      }
+      return list_1
+    };
+
+    function check (l,x,y) {
+      var count = 0;
+      for(var i = -1 ; i<2; i++) {
+        if (x == 0 && i < 0 ) {
+          i = 0;
+        };
+      console.log("upper",i,j);
+        for (var j = -1; j<2; j++) {
+          if ( y == 0 && j < 0) {
+            j = 0;
+          };
+          console.log("down",i,j);
+          if ( l[x+i][y+j] !== undefined) {
+            if(l[x+i][y+j] === "*" ){
+              count += 1;
+            console.log("count", count);
+            };
+            
+          };
+        };
+      };
+      return count; 
+    };
+
+    function ch (l,x,y) {
+      var a1 = l.length;
+      var a2 = l[0].length;
+      var li = [];
+      if (x == 0)
+      if (x == a1)
+      if (y == 0)
+      if (y == a2)
     }
 
     
+
+
 
 
 
