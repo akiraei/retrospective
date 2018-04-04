@@ -123,11 +123,26 @@ function flag (a) {
   var str="";
   var str_buffer =""
   var count = 0;
+  var choice_cell = 0;
 
 for (var i = 0; i < a; i++) {
   for (var j = 0; j < b; j++) {
     count += 1;
-    str = str + count + "번째 줄입니다. <br/>";
+
+str +=  '<div class = "lv1">';
+str +=   count;
+str += '<div class = "lv2" onclick="input(this)">';
+str +=  choice_cell;
+choice_cell += 1;
+str += "</div>";
+str += '<div class = "lv2" onclick="flag(this)">';
+str +=  choice_cell ;
+choice_cell += 1;
+str +=   "</div>"
+str += "</div>"
+    
+
+    str + count + "번째 줄입니다. <br/>";
   };
 };
   
