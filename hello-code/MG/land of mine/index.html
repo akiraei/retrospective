@@ -9,7 +9,7 @@
 </head>
 <body>
   
-<div class="cover_hidden">
+<div class="cover">
 
   <h1> Land of Mine </h1>
   <p> set matrix as you want</p>
@@ -19,9 +19,9 @@
   <fieldset>
    
     <section>
-      <input type="number" placeholder="row"> </input>
-      <input type="number" placeholder="column"> </input>
-      <input type="button" value="SET"> </input>
+      <input id="row" type="number" min="1" max="99" placeholder="row"> </input>
+      <input id="column" type="number" min="1" max="99" placeholder="column"> </input>
+      <input id="set" type="button" value="SET"> </input>
     </section>
   </fieldset>  
   </form>
@@ -31,21 +31,21 @@
 
 </div>
 
-<div class="container">
+<div class="contents">
 
 
 
 <header>
 
-  <img> logo </img>
+  <img src="https://assets.pcmag.com/media/images/486280-pentax-k-1-mark-ii.jpg?width=3783&height=2128">
 
-       <form>
+       <!-- <form>
       <fieldset>
           <input type="button" value="reset button"> </input>
       </fieldset>  
-      </form>
+      </form> -->
 
-  <a> Copy Link </a>
+  <div class="copy_link">Copy Link</div>
 
 </header>
 
@@ -53,28 +53,45 @@
 
 <!-- matrix  -->
 
+  
+<p id="pseudo_button"> generate button </p>
+
+<div class = "container" id = "container"></div>
+
 </main>
 
 <footer>
 
-<span> name </span>
-<sapn> git address </sapn>
-<span> thanks to </span>
+  <dl>
+    <dt>name</dt>
+    <dd>akira</dd>
+    <dt>git address</dt>
+    <dd>blank</dd>
+    <dt>thanks to</dt>
+    <dd>you</dd>
+  </dl>
 
 </footer>
-</div>
+
+
+</div> <!-- contents </div> -->
 
 <div class = "win">
 
-
+<div> you did it! </div>
+<div> play again </div>
 
 </div>
 <div class = "fail">
 
-
+  <div> you died </div>
+  <div> play again </div>
 
 
 </div>
 
+
+
+<script type="text/javascript" src="script.js"></script>
 </body>
 </html>

@@ -1,5 +1,37 @@
 var b_map = [["a", "b"], ["*", "c"]];
 
+// --------------begin of set_matrix--------------------------------------
+
+var combination;
+
+function get_number () {
+  var row_n = document.getElementById("row").value;
+  var column_n = document.getElementById("column").value;
+  return [row_n, column_n]
+};
+
+function cover_hidden () {
+  var cover_hidden = document.getElementsByClassName("cover");
+  console.log("get in")
+  console.log("cover_hidden[0]", cover_hidden[0]);
+  cover_hidden[0].style.visibility = "hidden";
+};
+
+function get_set () {
+  combination = get_number();
+  cover_hidden();
+  column_test();
+  console.log(combination);
+  return combination;
+};
+
+var set = document.getElementById("set");
+set.addEventListener("click",get_set);
+
+
+
+// --------------end of set_matrix--------------------------------------
+
 // --------------begin of load--------------------------------------
 
 function count_load(a) {
@@ -76,21 +108,64 @@ function xy2(a) {
   return [u, d];
 }
 
+
+function check2(a, b) {
+  console.log("0", a, "1", b);
+  if (b_map[a][b] == "*") {
+    console.log("get_in");
+    return 1;
+  } else {
+    return 0;
+  }
+}
+
 function flagging(a, b) {
+  console.log("flagging");
   b_map[a][b] = "!";
 }
 
-function flag(a) {
+function unflagging(a, b) {
+  console.log("unflagging");
+  console.log(b_map[a][b]);
+  if ( b_map[a][b] == "!") {
+    b_map[a][b] = "*"
+  };
+}
+
+
+function flaged(a) {
+  console.log("flaged");
+  a.className = "lv2 flaged"
+};
+
+function unflaged (a) {
+  console.log("unflaged");
+  a.className = "lv2"
+};
+
+
+
+
+function flag(a) { // <-- integratrion all of flag related function
   var t = xy2(a);
-  var x = check(t[0], t[1]);
+  var x = check2(t[0], t[1]);
   console.log("x", x);
-  console.log(b_map[t[0]][t[1]]);
+  console.log(b_map[t[0]][t[1]]); 
 
   if (x == 1) {
     flagging(t[0], t[1]);
     console.log(b_map[t[0]][t[1]]);
+      if (a.className == "lv2 flaged") {
+    unflaged(a)} else { flaged(a)};
+  } else {
+    unflagging(t[0], t[1]);
+    console.log(b_map[t[0]][t[1]]);
+      if (a.className == "lv2 flaged") {
+    unflaged(a)} else { flaged(a)};
+    
   }
 }
+
 
 //---------------end of flag---------------------------------
 
@@ -107,7 +182,17 @@ function flag(a) {
 //   document.getElementById("testArea").innerHTML=str;
 //   }
 
-var make_n = [3, 4];
+// var make_n = [3, 4];
+
+var grid_container = document.getElementById("container").style;
+var grid_container_c = grid_container.gridTemplateColumns;
+
+function column_test() {
+     grid_container_c = combination[1];
+};
+
+
+
 
 function change_body(a, b) {
   var str = "";
@@ -147,7 +232,7 @@ function change_body(a, b) {
 
 var pseudo_button = document.getElementById("pseudo_button");
 pseudo_button.addEventListener("click", function() {
-  change_body(make_n[0], make_n[1]);
+  change_body(combination[0], combination[1]);
 });
 
 var lv2;
