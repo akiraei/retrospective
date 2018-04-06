@@ -1,4 +1,99 @@
-var b_map = [["a", "b"], ["*", "c"]];
+var t_map = [["a", "b"], ["*", "c"]];
+var b_map;
+
+// --------------begin of make_matrix--------------------------------------
+
+function gen (a, b) {
+  var list_1 = [];
+  for (var i = 0; i < a; i++){
+    var list_2 = []
+    for (var j = 0; j < b; j++){
+                if(Math.round(Math.random()) == 1) {
+        list_2[j] = "*";
+      } else {
+        list_2[j] = ".";
+      }
+              };
+    list_1[i] = list_2;
+  }
+  return list_1
+};
+
+
+
+function check_bomb (l,x,y) {
+  var count = 0;
+  for(var i = -1 ; i<2; i++) {
+    if (x == 0 && i < 0 ) {
+      i = 0;
+    };
+  console.log("upper",i,j,x+i,y+j);
+    for (var j = -1; j<2; j++) {
+      if ( y == 0 && j < 0) {
+        j = 0;
+      };
+      console.log("down",i,j,x+i,y+j);
+     if ( x+i > l.length - 1) {
+       console.log("before break");
+       break;
+       console.log("after break");
+       return count;
+     } else {
+        if(l[x+i][y+j] === "*" ){
+          count += 1;
+        console.log("count", count);
+        };
+    };
+    
+    };
+  };
+  return count; 
+};
+
+
+
+function trans (l) {
+for (var i = 0; i < l.length; i++) {
+for (var j = 0; j < l[0].length; j++) {
+  if ( l[i][j] != "*" ) {
+    l[i][j] = check_bomb(l,i,j);
+  };
+};
+};
+return l;
+};
+
+
+var unbomb_num = 0;
+
+function unbomb_numbering (l,e,f) {
+  for (var c = 0; c < e; c++) {
+    for (var d = 0; d < f; d++) {
+      if ( l[c][d] != "*") {
+        unbomb_num += 1;
+      }
+    }
+  }
+  console.log("unbomb_num",unbomb_num);
+}
+
+
+function board_set (a, b) {
+var t = gen (a,b);
+var tt = trans(t);
+unbomb_numbering (tt,a,b);
+return tt;
+};
+
+
+
+// --------------end of make_matrix--------------------------------------
+
+
+
+
+
+
 
 // --------------begin of set_matrix--------------------------------------
 
@@ -17,12 +112,22 @@ function cover_hidden () {
   cover_hidden[0].style.visibility = "hidden";
 };
 
+var grid_container = document.getElementById("container").style;
+
+function column_maker() {
+     grid_container.gridTemplateColumns = "repeat(" + combination[1] + ", 1fr)" ;
+};
+
 function get_set () {
   combination = get_number();
+  b_map = board_set (combination[0], combination[1]);
   cover_hidden();
-  column_test();
-  console.log(combination);
-  return combination;
+  console.log("combination", combination);
+  column_maker();
+  console.log("column_maker");
+  make_grid(combination[0], combination[1]);
+  console.log("make_grid");
+  return;
 };
 
 var set = document.getElementById("set");
@@ -32,42 +137,55 @@ set.addEventListener("click",get_set);
 
 // --------------end of set_matrix--------------------------------------
 
+
+
+
+
+
+
 // --------------begin of load--------------------------------------
 
-function count_load(a) {
-  var x = 0;
-  for (var i = 0; i < a.length; i++) {
-    console.log("i", i);
-    for (var j = 0; j < a[0].length; j++) {
-      console.log("j", j);
-      if (a[i][j] == "*") {
-        x = x + 1;
-      }
-    }
-  }
-  console.log(x);
-  return x;
-}
+// function count_load(a) {
+//   var x = 0;
+//   for (var i = 0; i < a.length; i++) {
+//     console.log("i", i);
+//     for (var j = 0; j < a[0].length; j++) {
+//       console.log("j", j);
+//       if (a[i][j] == "*") {
+//         x = x + 1;
+//       }
+//     }
+//   }
+//   console.log(x);
+//   return x;
+// }
 
-window.addEventListener("load", function() {
-  count_load(b_map);
-});
+// window.addEventListener("load", function() {
+//   count_load(b_map);
+// });
 
 //---------------end of load---------------------------------
+
+
+
+
+
+
+
 
 //---------------begin of input---------------------------------
 
 function xy1(a) {
-  console.log("xy");
-  console.log(a.id);
-  var u = Math.floor(a.id / 2 / 2);
-  var d = (a.id / 2) % 2;
+  console.log("xy1");
+  console.log("a.id", a.id, "a.id / 2", a.id/2);
+  var u = Math.floor(( a.id / 2 ) / b_map[0].length); // right
+  var d = (a.id / 2 ) % b_map[0].length ; // 
   console.log("u", u, "d", d);
   return [u, d];
 }
 
 function check(a, b) {
-  console.log("0", a, "1", b);
+  console.log("row", a, "column", b);
   if (b_map[a][b] == "*" || b_map[a][b] == "!") {
     console.log("get_in");
     return 1;
@@ -77,11 +195,15 @@ function check(a, b) {
 }
 
 function boom(a, b) {
-  lv1[2 * a + b].textContent = "boom!";
+  lv1[ b_map[0].length * a + b ].textContent = "boom!"; // 다 죽일거야 진짜 이부분```````
 }
 
 function number(a, b) {
-  lv1[2 * a + b].textContent = b_map[a][b];
+  unbomb_num -= 1;
+  lv1[ b_map[0].length * a + b ].textContent = b_map[a][b];
+  if (unbomb_num == 0) {
+    document.getElementsByClassName("win")[0].style.visibility = "unset";
+  }
 }
 
 function input(a) {
@@ -90,6 +212,9 @@ function input(a) {
   console.log("x", x);
   if (x == 1) {
     boom(t[0], t[1]);
+    console.log("boom");
+    document.getElementsByClassName("fail")[0].style.visibility = "unset";
+    console.log("fail");
   } else {
     number(t[0], t[1]);
   }
@@ -97,13 +222,20 @@ function input(a) {
 
 //---------------end of input---------------------------------
 
+
+
+
+
+
+
+
 //---------------begin of flag---------------------------------
 
 function xy2(a) {
   console.log("xy");
   console.log(a.id);
-  var u = Math.floor((a.id - 1) / 2 / 2);
-  var d = ((a.id - 1) / 2) % 2;
+  var u = Math.floor((a.id - 1) /2 / b_map[0].length );
+  var d = ((a.id - 1) / 2 ) % b_map[0].length ;
   console.log("u", u, "d", d);
   return [u, d];
 }
@@ -135,12 +267,14 @@ function unflagging(a, b) {
 
 function flaged(a) {
   console.log("flaged");
-  a.className = "lv2 flaged"
+  a.className = "lv2 flaged";
+  a.textContent = "flaged";
 };
 
 function unflaged (a) {
   console.log("unflaged");
-  a.className = "lv2"
+  a.className = "lv2";
+  a.textContent = "unflaged";
 };
 
 
@@ -169,6 +303,13 @@ function flag(a) { // <-- integratrion all of flag related function
 
 //---------------end of flag---------------------------------
 
+
+
+
+
+
+
+
 //---------------begin of generate---------------------------------
 
 //  function changeDiv(){
@@ -184,17 +325,8 @@ function flag(a) { // <-- integratrion all of flag related function
 
 // var make_n = [3, 4];
 
-var grid_container = document.getElementById("container").style;
-var grid_container_c = grid_container.gridTemplateColumns;
 
-function column_test() {
-     grid_container_c = combination[1];
-};
-
-
-
-
-function change_body(a, b) {
+function make_grid(a, b) {
   var str = "";
   var str_buffer = "";
   var count = 0;
@@ -209,13 +341,13 @@ function change_body(a, b) {
       str += '<div class = "lv2" id="';
       str += choice_cell;
       str += '" onclick="input(this)">';
-      str += choice_cell;
+      str += "click"
       choice_cell += 1;
       str += "</div>";
       str += '<div class = "lv2" id="';
       str += choice_cell;
       str += '" onclick="flag(this)">';
-      str += choice_cell;
+      str += "unflaged"
       choice_cell += 1;
       str += "</div>";
       str += "</div>";
@@ -230,10 +362,10 @@ function change_body(a, b) {
   lv1 = document.getElementsByClassName("lv1");
 }
 
-var pseudo_button = document.getElementById("pseudo_button");
-pseudo_button.addEventListener("click", function() {
-  change_body(combination[0], combination[1]);
-});
+// var pseudo_button = document.getElementById("pseudo_button");
+// pseudo_button.addEventListener("click", function() {
+//   make_grid(combination[0], combination[1]);
+// });
 
 var lv2;
 var lv1;
