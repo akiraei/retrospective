@@ -1,4 +1,4 @@
-@charset utf-8;
+@charset "utf-8";
 /* @import url(normalize.css);
 @import url(fonts.css); */
 
@@ -52,6 +52,18 @@ text-align: center;
   line-height: 0.1;
 }
 
+/* ----------------contents--------------------------- */
+
+
+.contents {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+
+
+
 /* ----------------header--------------------------- */
 
 
@@ -77,15 +89,23 @@ header img{
   width: auto;
 }
 
+.contents header {
+  height: 10vh;
+  background-color: red; 
+ }
 
-
-/* ----------------contents--------------------------- */
-
-.contents {
-  width: 100vw;
-  height: 100vh;
-  position: relative;
+ .header a{
+  display: block;
+  height: 10vh;
+  width: 10vh;
+  float: right;
 }
+
+
+
+/* ----------------main--------------------------- */
+
+
 
 
 /* .contents:after {
@@ -99,22 +119,9 @@ header img{
   position: absolute;
 } */
 
-.contents header {
- height: 10vh;
- background-color: red; 
-}
-
-.contents a{
-  display: block;
-  height: 10vh;
-  width: 10vh;
-  float: right;
-}
-
-.contents form{
-  height: 5vh;
-  width: 8vh;
-  float: right;
+.score {
+  text-align: right;
+  line-height: 2rem;
 }
 
 .container {
@@ -122,6 +129,7 @@ header img{
   grid-template-columns: repeat(3, 1fr);
   /* grid-template-rows: repeat(4, 1fr); */
   grid-gap: 10px;
+  height: 75vh;
 }
 
 .lv1 {
@@ -133,8 +141,9 @@ header img{
   border-width: 5px;
   border-color: aqua;
   color: white;
-  height: 20vh;
+  /* height: 20vh; */
 }
+
 
 .lv2 {
   background: white;

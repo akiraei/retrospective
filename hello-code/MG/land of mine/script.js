@@ -8,7 +8,7 @@ function gen (a, b) {
   for (var i = 0; i < a; i++){
     var list_2 = []
     for (var j = 0; j < b; j++){
-                if(Math.round(Math.random()) == 1) {
+                if(Math.random() < 0.15) {
         list_2[j] = "*";
       } else {
         list_2[j] = ".";
@@ -75,13 +75,18 @@ function unbomb_numbering (l,e,f) {
     }
   }
   console.log("unbomb_num",unbomb_num);
+  return unbomb_num;
 }
 
+function numbering_mine (a,b,unmine_num) {
+  document.getElementById("number_of_mine").textContent = a*b - unmine_num
+}
 
 function board_set (a, b) {
 var t = gen (a,b);
 var tt = trans(t);
-unbomb_numbering (tt,a,b);
+var c = unbomb_numbering (tt,a,b);
+numbering_mine (a,b,c);
 return tt;
 };
 
@@ -373,3 +378,7 @@ var lv1;
 // 그럼 밑에다 두면 왜 작동을 하지...? 호이스팅 문제 인거 같긴 한데 ... function에 의해서 function 앞에 있으면 var lv2;와 var lv1;도 리셋이 되는 건가?
 
 //---------------end of generate---------------------------------
+
+
+
+
