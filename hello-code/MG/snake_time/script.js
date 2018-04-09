@@ -13,7 +13,7 @@
 // }
 
 
-var keyset = {};
+const keyset = {};
 keyset.r = {x: 2, y: 0};
 keyset.l = {x: -2, y: 0};
 keyset.u = {x: 0, y: 2};
@@ -26,25 +26,33 @@ keyset.d = {x: 0, y: -2};
 //-----------------units------------------------------
 
 
-function Unit() {};
+const Unit = function () {};
 // Unit.prototype = {id_num: 0, vector: 0, xy: 0, diameter: 0};
-Unit.prototype.id_num = 0;
-Unit.prototype.vector = {x: 0, y: 10, l: 10};
-Unit.prototype.xy = {x: 300, y: 300};
-Unit.prototype.diameter = 100;
+this.id_num = 0;
+this.vector = {x: 0, y: 10, l: 10};
+this.xy = {x: 300, y: 300};
+this.diameter = 100;
 
 
 //------------------ genarater---------------------------
 
 
-var units = [];
+const units = [];
 
-function genarator (apple) {
+const genarator = function (apple) {
     if (apple == 1) {
-        var num = units.length
-        var t = new Unit;
-        t.id_num = num;
-        units[num] = t;
+        if (units.length == 0){
+            let num = units.length
+            let t = new Unit;
+            t.id_num = num;
+            units[num] = t;
+        } else { 
+            let num = units.length
+            let t = new Unit;
+            t.id_num = num;
+            t.xy.x = units[num-1].xy.x + 100;
+            units[num] = t;
+        }
     }
     console.log(units);
 }
@@ -54,24 +62,35 @@ function genarator (apple) {
 
 //---------------vector_sum-----------------------------
 
-var head_vector = function (target, keyset_direction) {
+const head_vector = function (target, keyset_direction) {
     target.vector.x += keyset_direction.x;
     target.vector.y += keyset_direction.y;
-    var radian = Math.atan2(target.vector.y, target.vector.x);
+    let radian = Math.atan2(target.vector.y, target.vector.x);
     target.vector.x = target.vector.l * Math.cos(radian);
     target.vector.y = target.vector.l * Math.sin(radian);
 }
 
 
 
-var follow_vector = function (follower, keyset_direction) {
-    var n = follower.id_num;
+const follow_vector = function (follower) {
+    let n = follower.id_num;
     follower.vector.x = units[n-1].xy.x - follower.xy.x;
     follower.vector.y = units[n-1].xy.y - follower.xy.y;
-    var radian = Math.atan2(follower.vector.y, follower.vector.x);
+    let radian = Math.atan2(follower.vector.y, follower.vector.x);
     follower.vector.x = follower.vector.l * Math.cos(radian);
     follower.vector.y = follower.vector.l * Math.sin(radian);
 }
+
+
+
+const linking  = function (keyset_direction) {
+    head_vector (units[0], keyset_direction);
+    for (let i = 1; i < units.length; i ++) {
+        follow_vector (units[i]);
+    };
+}
+
+
 
 
 
